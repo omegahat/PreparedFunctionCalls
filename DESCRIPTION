@@ -1,0 +1,7 @@
+Package: PreparedFunctionCalls
+Title: Testing timing of different approaches to function calls
+Description: ..
+Author: Duncan Temple Lang
+Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
+License: BSD
+Version: 0.1-0

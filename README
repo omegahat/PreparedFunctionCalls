@@ -1,0 +1,48 @@
+This is an exploration in using a prepared function call from within C
+to callback to R within a "loop".  We could create the call each time,
+or we can create the call just once and fill in the values of the
+"primitives" in each call.  We could further just evaluate the body of
+the function within an environment that we change.
+
+
+The first two approaches work with a regular version of R.
+However, we could do with declaring the  routine R_NewHashedEnv()
+in the R headers.
+
+The evaluation of the body within a persistent environment
+whose contents are updated for each call has the problem that
+the local variables within the function need to be removed
+at the end of each call.
+
+The third approach (still being implemented and #ifdef'ed out)
+would require some changes to R to allow us to create a call
+frame/environment with the already matched arguments.
+
+
+The basic motivation for this is the idea is that we have 
+a form of an iterator in C/C++, e.g. looping over streaming
+data,  asynchronous event callbacks, or looping over elements
+in a C data structure, or passing records in a database to a User
+Defined Function (UDF) to an R function.
+
+We are given a function as the "callback" or record operator.
+It can have an enclosing environment.
+
+If the function had type information associated with it to identify
+scalars, we could use that to create the C code to invoke the function
+on each call.  Similarly, if we could identify the types of the
+parameters for the C invocation, e.g.  from the schema in a database
+table (or query), we could generate the code for the invocation.
+
+For instance, if we had a database table with a schema given by
+
+ CREATE TABLE (
+    real x,
+    int4 year)
+and for some reason we wanted to invoke a query such as
+
+    
+
+GNU Lightning
+   http://www.gnu.org/software/lightning/lightning.html
+
